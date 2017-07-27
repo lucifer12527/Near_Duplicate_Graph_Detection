@@ -1,0 +1,42 @@
+Loading...
+
+Setting: Self-join - count min-edit label degree ft.
+         Num = 3673 Q = 3 TAU = 2 DB = aids_4000.db
+
+Self-join resp. time: 2.63829
+No. of Pairs Whose GED is calculated : 0
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Candidates before non-trivial filters: 158726 <2.35%>
+Candidates need GED computation: 2957 <0.04%>
+Answers: 0 / candidate pairs <0.00%>
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Indexing time: 3.89
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Inverted index size in byte: 13964
+               entry number: 579
+Signature avg. number of q-gram: 52.08 <max 954>
+          multiset size in byte: 1530176
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Done...
+
+         Num = 3673 Q = 4 TAU = 2 DB = aids_4000.db
+
+Self-join resp. time: 21.65
+No. of Pairs Whose GED is calculated : 1823
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Candidates before non-trivial filters: 147162 <2.18%>
+Candidates need GED computation: 2497 <0.04%>
+Answers: 120 / candidate pairs <4.81%>
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Indexing time: 6.69
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Inverted index size in byte: 31672
+               entry number: 1301
+Signature avg. number of q-gram: 70.05 <max 3181>
+          multiset size in byte: 2315646
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Done...

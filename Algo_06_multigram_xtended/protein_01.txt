@@ -1,0 +1,42 @@
+	Loading...
+
+Setting: Self-join - count min-edit label degree ft.
+         Num = 568 Q = 3 TAU = 2 DB = protein.db
+
+Self-join resp. time: 0.131224
+No. of Pairs Whose GED is calculated : 0
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Candidates before non-trivial filters: 230 <0.14%>
+Candidates need GED computation: 19 <0.01%>
+Answers: 0 / candidate pairs <0.00%>
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Indexing time: 7.66
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Inverted index size in byte: 23476
+               entry number: 818
+Signature avg. number of q-gram: 558.78 <max 1670>
+          multiset size in byte: 2539080
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Done...
+
+         Num = 568 Q = 4 TAU = 2 DB = protein.db
+
+Self-join resp. time: 0.69
+No. of Pairs Whose GED is calculated : 19
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Candidates before non-trivial filters: 180 <0.11%>
+Candidates need GED computation: 22 <0.01%>
+Answers: 12 / candidate pairs <54.55%>
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Indexing time: 29.30
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Inverted index size in byte: 72080
+               entry number: 3939
+Signature avg. number of q-gram: 1488.90 <max 5509>
+          multiset size in byte: 7611273
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Done...
