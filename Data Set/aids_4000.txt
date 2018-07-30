@@ -1,0 +1,21 @@
+Loading...
+
+Setting: Self-join - count min-edit label degree ft.
+         Num = 3673 Q = 4 TAU = 2 DB = aids_4000.db
+
+Self-join resp. time: 21.4353
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Candidates before non-trivial filters: 147162 <2.18%>
+Candidates need GED computation: 2497 <0.04%>
+Answers: 120 / candidate pairs <4.81%>
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Indexing time: 6.36
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+Inverted index size in byte: 11340
+               entry number: 701
+Signature avg. number of q-gram: 70.05 <max 3181>
+          multiset size in byte: 2315646
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+
+Done...
