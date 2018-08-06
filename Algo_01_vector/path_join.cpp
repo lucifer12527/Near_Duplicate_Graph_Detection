@@ -274,117 +274,64 @@ void join_min_prefix_index( void )
 				}
 		}	
 	}
-if (vf_order == '3') {
-	#ifdef UNIX
-		timeval begin;
-		gettimeofday(&begin, NULL);
-	#else
-		double begin = (double)clock();		
-	#endif
-	// Inserting graph 0 into inverted index
-	for (int j = 0; j != glen[0]; j++) {
-		if (path_graph[pdb[0][j]->hash_val].size() == 0) {
-			path_graph[pdb[0][j]->hash_val].push_back(0);
-		}
-		else if (binary_search (path_graph[pdb[0][j]->hash_val], 0) == -1)
-			path_graph[pdb[0][j]->hash_val].push_back(0);
-	}
-	// Inserting rest of the graph into inverted index
-	for (int i = 1; i != gdb_size; ) {
-		switch(status[i]) {
-
-			case 0:
-			free_end = i;
-			// loop goes upto the minimum prefix length
-			for (int j = 0; j != glen[i]; j++) {
-				int s = path_graph[pdb[i][j]->hash_val].size();
-				// whether the hash value is present or not
-				if (s == 0) { 
-					path_graph[pdb[i][j]->hash_val].push_back(i);
-				}
-				// Whether graph i is already present or not
-				else if (binary_search (path_graph[pdb[i][j]->hash_val], i) != -1) {
-					continue;
-				}
-				// Case where hash value is already present and graph i is not
-				else {
-					ip = path_graph[pdb[i][j]->hash_val].rbegin();
-					end = path_graph[pdb[i][j]->hash_val].rend();
-					// Loop to through each element of that vector from back side 
-					for ( ; ip != end; ++ip) {
-						if (status[*ip] == -1) 
-							continue;
-
-						tested[++ test_cnt] = *ip;
-						backup[test_cnt] = status[*ip];      // backup array to store status array value
-						status[*ip] = -1;                    // Updating the status array
-						
-						if (*ip < free_end) {
-							// size condition
-							if (abs((int)gdb[i].total_num - (int)gdb[*ip].total_num) <= tau) {
-								free_end = *ip;	
-							}
-							else  {
-								int pos = binary_search (path_graph[pdb[i][j]->hash_val], *ip);
-								beg = path_graph[pdb[i][j]->hash_val].begin();				
-								path_graph[pdb[i][j]->hash_val].erase(beg, beg+pos+1);
-								break;
-							}
-						}
-						// Appling all the filters
-						if (size_filtering(i, *ip)) {
-							++ cand;
-							if (label_filtering(i, *ip)) {
-								pri = content_filtering(i, *ip);
-								if (pri != NULL) {
-									++ dist_cand;
-									// Computing GED
-									compute_rud_dist(pri, ans, filter_only);
-								}
-								delete pri;
-							}
-						}
-					}
-					path_graph[pdb[i][j]->hash_val].push_back(i);
-				}
+	if (vf_order == '3') {
+		#ifdef UNIX
+			timeval begin;
+			gettimeofday(&begin, NULL);
+		#else
+			double begin = (double)clock();		
+		#endif
+		// Inserting graph 0 into inverted index
+		for (int j = 0; j != glen[0]; j++) {
+			if (path_graph[pdb[0][j]->hash_val].size() == 0) {
+				path_graph[pdb[0][j]->hash_val].push_back(0);
 			}
-			break;   // case 0 end here
+			else if (binary_search (path_graph[pdb[0][j]->hash_val], 0) == -1)
+				path_graph[pdb[0][j]->hash_val].push_back(0);
+		}
+		// Inserting rest of the graph into inverted index
+		for (int i = 1; i != gdb_size; ) {
+			switch(status[i]) {
 
-			case 1:
-			free_end = i;
-			// loop goes upto the minimum prefix length
-			for (int j = 0; j != glen[i]; j++) {
-				// whether the hash value is present or not
-				if (path_graph[pdb[i][j]->hash_val].size() == 0) {
-					path_graph[pdb[i][j]->hash_val].push_back(i);
-				}
-				// Whether graph i is already present or not
-				else if (binary_search (path_graph[pdb[i][j]->hash_val], i) != -1) 
-					continue;
-				// Case where hash value is already present and graph i is not
-				else {
-					ip = path_graph[pdb[i][j]->hash_val].rbegin();
-					end = path_graph[pdb[i][j]->hash_val].rend();
+				case 0:
+				free_end = i;
+				// loop goes upto the minimum prefix length
+				for (int j = 0; j != glen[i]; j++) {
+					int s = path_graph[pdb[i][j]->hash_val].size();
+					// whether the hash value is present or not
+					if (s == 0) { 
+						path_graph[pdb[i][j]->hash_val].push_back(i);
+					}
+					// Whether graph i is already present or not
+					else if (binary_search (path_graph[pdb[i][j]->hash_val], i) != -1) {
+						continue;
+					}
+					// Case where hash value is already present and graph i is not
+					else {
+						ip = path_graph[pdb[i][j]->hash_val].rbegin();
+						end = path_graph[pdb[i][j]->hash_val].rend();
+						// Loop to through each element of that vector from back side 
+						for ( ; ip != end; ++ip) {
+							if (status[*ip] == -1) 
+								continue;
 
-					for ( ; ip != end; ++ip) {
-						if (status[*ip] == 0) {
-
-							tested[++ test_cnt] = *ip;             // backup array to store status array value
-							backup[test_cnt] = status[*ip];		    // Updating the status array
-							status[*ip] = -1;
+							tested[++ test_cnt] = *ip;
+							backup[test_cnt] = status[*ip];      // backup array to store status array value
+							status[*ip] = -1;                    // Updating the status array
+							
 							if (*ip < free_end) {
 								// size condition
 								if (abs((int)gdb[i].total_num - (int)gdb[*ip].total_num) <= tau) {
-									free_end = *ip;
+									free_end = *ip;	
 								}
-								else {
+								else  {
 									int pos = binary_search (path_graph[pdb[i][j]->hash_val], *ip);
 									beg = path_graph[pdb[i][j]->hash_val].begin();				
-									path_graph[pdb[i][j]->hash_val].erase(beg, beg+pos+1);		
+									path_graph[pdb[i][j]->hash_val].erase(beg, beg+pos+1);
 									break;
 								}
 							}
-							// appling all filters
+							// Appling all the filters
 							if (size_filtering(i, *ip)) {
 								++ cand;
 								if (label_filtering(i, *ip)) {
@@ -394,81 +341,134 @@ if (vf_order == '3') {
 										// Computing GED
 										compute_rud_dist(pri, ans, filter_only);
 									}
-									delete pri;									
+									delete pri;
 								}
 							}
 						}
+						path_graph[pdb[i][j]->hash_val].push_back(i);
 					}
-					path_graph[pdb[i][j]->hash_val].push_back(i);
 				}
-			}
-			break;  // case 1 end here
+				break;   // case 0 end here
 
-			default :
-				++i;
-		} // switch statement end here
+				case 1:
+				free_end = i;
+				// loop goes upto the minimum prefix length
+				for (int j = 0; j != glen[i]; j++) {
+					// whether the hash value is present or not
+					if (path_graph[pdb[i][j]->hash_val].size() == 0) {
+						path_graph[pdb[i][j]->hash_val].push_back(i);
+					}
+					// Whether graph i is already present or not
+					else if (binary_search (path_graph[pdb[i][j]->hash_val], i) != -1) 
+						continue;
+					// Case where hash value is already present and graph i is not
+					else {
+						ip = path_graph[pdb[i][j]->hash_val].rbegin();
+						end = path_graph[pdb[i][j]->hash_val].rend();
 
-		// Reupdating the status array to its original values
-		++ test_cnt;
-		if (++ i != gdb_size) {		
-			for (unsigned j = 0; j != test_cnt; ++ j) {
-				status[tested[j]] = backup[j];
-			}
-			test_cnt = -1;
-		} 
-		else 
-			break;
-	}
+						for ( ; ip != end; ++ip) {
+							if (status[*ip] == 0) {
 
-	// un-indexed graph pairs  (Nothimg to do with inverted index)
-	free_end = 0;
-	for (unsigned i = 0, m = uid.size(); i != m; ++ i) {   
-		for (unsigned j = i + 1, n = uid.size(); j != n; ++ j) {
-			if (uid[j] > free_end) {
-				// size condition
-				if (abs((int)gdb[uid[j]].total_num - (int)gdb[uid[i]].total_num) <= tau) {
-					free_end = uid[j];
+								tested[++ test_cnt] = *ip;             // backup array to store status array value
+								backup[test_cnt] = status[*ip];		    // Updating the status array
+								status[*ip] = -1;
+								if (*ip < free_end) {
+									// size condition
+									if (abs((int)gdb[i].total_num - (int)gdb[*ip].total_num) <= tau) {
+										free_end = *ip;
+									}
+									else {
+										int pos = binary_search (path_graph[pdb[i][j]->hash_val], *ip);
+										beg = path_graph[pdb[i][j]->hash_val].begin();				
+										path_graph[pdb[i][j]->hash_val].erase(beg, beg+pos+1);		
+										break;
+									}
+								}
+								// appling all filters
+								if (size_filtering(i, *ip)) {
+									++ cand;
+									if (label_filtering(i, *ip)) {
+										pri = content_filtering(i, *ip);
+										if (pri != NULL) {
+											++ dist_cand;
+											// Computing GED
+											compute_rud_dist(pri, ans, filter_only);
+										}
+										delete pri;									
+									}
+								}
+							}
+						}
+						path_graph[pdb[i][j]->hash_val].push_back(i);
+					}
 				}
-				else 
-					break;
-			}
-			// filters
-			if (size_filtering(uid[j], uid[i])) {
-				++ cand;
-				if (label_filtering(uid[j], uid[i])) {
-					if (gdb[uid[j]].path_num == 0 && gdb[uid[i]].path_num == 0) {
-						++ dist_cand;
-						pri = new Priority(uid[i], uid[j]);	
-						// Computing GED
-						compute_rud_dist(pri, ans, filter_only);
-						delete pri;
-					} else {
-						pri = content_filtering(uid[j], uid[i]);
-						if (pri != NULL) {
+				break;  // case 1 end here
+
+				default :
+					++i;
+			} // switch statement end here
+
+			// Reupdating the status array to its original values
+			++ test_cnt;
+			if (++ i != gdb_size) {		
+				for (unsigned j = 0; j != test_cnt; ++ j) {
+					status[tested[j]] = backup[j];
+				}
+				test_cnt = -1;
+			} 
+			else 
+				break;
+		}
+
+		// un-indexed graph pairs  (Nothimg to do with inverted index)
+		free_end = 0;
+		for (unsigned i = 0, m = uid.size(); i != m; ++ i) {   
+			for (unsigned j = i + 1, n = uid.size(); j != n; ++ j) {
+				if (uid[j] > free_end) {
+					// size condition
+					if (abs((int)gdb[uid[j]].total_num - (int)gdb[uid[i]].total_num) <= tau) {
+						free_end = uid[j];
+					}
+					else 
+						break;
+				}
+				// filters
+				if (size_filtering(uid[j], uid[i])) {
+					++ cand;
+					if (label_filtering(uid[j], uid[i])) {
+						if (gdb[uid[j]].path_num == 0 && gdb[uid[i]].path_num == 0) {
 							++ dist_cand;
+							pri = new Priority(uid[i], uid[j]);	
 							// Computing GED
 							compute_rud_dist(pri, ans, filter_only);
+							delete pri;
+						} else {
+							pri = content_filtering(uid[j], uid[i]);
+							if (pri != NULL) {
+								++ dist_cand;
+								// Computing GED
+								compute_rud_dist(pri, ans, filter_only);
+							}
+							delete pri;
 						}
-						delete pri;
 					}
 				}
 			}
 		}
-	}
-	#ifdef UNIX
-		timeval end;
-		gettimeofday(&end, NULL);
-		cout << "\nSelf-join resp. time: " << setiosflags(ios::fixed) << setprecision(3)\
-			<< double(end.tv_sec-begin.tv_sec) + double(end.tv_usec-begin.tv_usec)/1e6 << endl;
-	#else
-		double end1 = (double)clock();
-		cout << "\nSelf-join resp. time: " << (end1 - begin)/CLOCKS_PER_SEC << endl;
-		timer = end1 - begin;
-	#endif
+		#ifdef UNIX
+			timeval end;
+			gettimeofday(&end, NULL);
+			cout << "\nSelf-join resp. time: " << setiosflags(ios::fixed) << setprecision(3)\
+				<< double(end.tv_sec-begin.tv_sec) + double(end.tv_usec-begin.tv_usec)/1e6 << endl;
+		#else
+			double end1 = (double)clock();
+			cout << "\nSelf-join resp. time: " << (end1 - begin)/CLOCKS_PER_SEC << endl;
+			timer = end1 - begin;
+		#endif
 
-	ECHO_JOIN
-	delete[] tested; delete[] backup; 
-}
+		ECHO_JOIN
+		delete[] tested; delete[] backup; 
+	}
 }
 
 

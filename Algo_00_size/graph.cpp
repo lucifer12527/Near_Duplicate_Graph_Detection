@@ -17,7 +17,7 @@ char Graph::read( istream& is, char prev_tag, set<int>& edge_label )
 	char tag = prev_tag;
 	unsigned i, j, k;
 	string s;
-	if (tag == 't') {                   // i stores the labl for the graph
+	if (tag == 't') {                   // i stores the label for the graph
 		is >> tag >> s >> tag;
 		this->name = s;
 	} else {
